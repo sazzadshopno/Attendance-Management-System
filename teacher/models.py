@@ -12,10 +12,21 @@ class Teacher(models.Model):
     def __str__(self):
         return "%s %s" % (self.first_name, self.last_name)
 
+class Batch(models.Model):
+    semester_id = models.CharField(max_length = 20, primary_key = True, null = False)
+    semester = models.CharField(max_length = 20)
+    department = models.CharField(max_length = 20)
+
+    class Meta:
+        ordering = ['semester_id']
+    
+    def __str__(self):
+        return "%s %s" % (self.department, self.semester)
+    
 class Course(models.Model):
     code = models.CharField(max_length = 10, primary_key = True)
     title = models.CharField(max_length = 50)
-    semester = models.CharField(max_length = 20)
+    semester = models.ForeignKey(Batch, on_delete= models.CASCADE)
     teacher = models.ForeignKey(Teacher, on_delete= models.CASCADE)
 
     class Meta:
@@ -30,6 +41,7 @@ class Student(models.Model):
     registration_no = models.CharField(max_length = 15, primary_key = True)
     roll_no = models.CharField(max_length = 10)
     session = models.CharField(max_length = 10)
+    semester = models.ForeignKey(Batch, on_delete= models.CASCADE)
     attendances = models.ManyToManyField(Course, through='Attendance')
 
     class Meta:
