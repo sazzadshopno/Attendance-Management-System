@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from .models import Teacher
 
-class TeacherRegisterForm(ModelForm):
+class TeacherSignUpForm(ModelForm):
     class Meta:
         model = Teacher
         fields = [
@@ -11,3 +11,4 @@ class TeacherRegisterForm(ModelForm):
             'username',
             'password'
         ]
+    
