@@ -2,5 +2,6 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('', views.index, name="index")
+    path('signup/', views.signupTeacher, name="signup"),
+    path('signin/', views.signinTeacher, name="signin")
 ]
