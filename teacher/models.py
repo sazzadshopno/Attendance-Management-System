@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.hashers import make_password
 
 class TeacherManager(BaseUserManager):
     def create_user(self, email, username, password=None):
@@ -22,7 +23,7 @@ class TeacherManager(BaseUserManager):
             password = password,
             username = username,
         )
-        user.is_admin = True
+        user.is_active = True
         user.is_staff = True
         user.is_superuser = True
         user.save(using = self._db)
@@ -32,7 +33,7 @@ class Teacher(AbstractBaseUser):
     last_name = models.CharField(max_length = 50)
     email = models.EmailField(max_length = 50, unique = True)
     username = models.CharField(max_length = 20, primary_key= True)
-    is_admin = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     last_login = models.DateTimeField(auto_now=True)
@@ -47,7 +48,7 @@ class Teacher(AbstractBaseUser):
 
 
     def has_perm(self, perm, obj= None):
-        return self.is_admin
+        return self.is_active
     
     def has_module_perms(self, app_label):
         return True

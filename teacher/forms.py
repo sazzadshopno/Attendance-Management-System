@@ -9,6 +9,8 @@ class TeacherSignUpForm(ModelForm):
             'last_name',
             'email',
             'username',
-            'password'
+            'password',
+            'is_active',
+            'is_staff',
+            'is_superuser'
         ]
-    

@@ -17,11 +17,6 @@
                     {{ message }}
                 </div>
             {% endif %}
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-                <div class="alert alert-success" role="alert">
-                    {{ message }}
-                </div>
-            {% endif %}
         {% endfor %}
         {% render_field form.first_name class="form-control" placeholder="first name" required="" autocomplete="off" type="text" %}
         {% render_field form.last_name class="form-control" placeholder="last name" required="" autocomplete="off" type="text" %}

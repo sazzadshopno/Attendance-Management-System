@@ -8,16 +8,23 @@
 
 <body class='text-center'>
     {% load widget_tweaks %}
-    <form class="form-signin">
+    <form class="form-signin" method="POST">
         {% csrf_token %}
         <h1 class="h3 mb-3 font-weight-normal">Teacher Panel</h1>
         {% for message in messages %}
-        <div class="alert alert-danger" role="alert">
-            {{ message }}
-        </div>
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
         {% endfor %}
-        {% render_field form.email class="form-control" placeholder="you@email.com" required="" autocomplete="off" type="email" %}
-        {% render_field form.password class="form-control" placeholder="password" required="" autocomplete="off" type="password" %}
+        <input type="email" name="email" class="form-control" placeholder="you@email.com" required="", autocomplete="off">
+        <input type="password" name="password" class="form-control" placeholder="password" required="", autocomplete="off">
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         <p class="h6 mt-2">Don't have an account? <a class="text-decoration-none" href="{% url 'signup' %}">Sign up</a>
         </p>
