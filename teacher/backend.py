@@ -8,7 +8,7 @@ class TeacherBackend(ModelBackend):
         password = kwargs['password']
         try:
             teacher = Teacher.objects.get(email=email)
-            if check_password(password, teacher.password) is True:
+            if check_password(password, teacher.password):
                 return teacher
         except Teacher.DoesNotExist:
             return None

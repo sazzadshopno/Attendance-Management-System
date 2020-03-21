@@ -1,1 +1,2 @@
-<h1>Welcome home</h1>
+<h1>Welcome! {{ request.user }} </h1>
+<a href="{% url 'logout' %}"> Logout</a>

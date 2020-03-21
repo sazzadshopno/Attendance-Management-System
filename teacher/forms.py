@@ -9,8 +9,13 @@ class TeacherSignUpForm(ModelForm):
             'last_name',
             'email',
             'username',
-            'password',
-            'is_active',
-            'is_staff',
-            'is_superuser'
+            'password'
+        ]
+
+class TeacherSignInForm(ModelForm):
+    class Meta:
+        model = Teacher
+        fields = [
+            'email',
+            'password'
         ]

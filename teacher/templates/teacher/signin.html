@@ -23,8 +23,8 @@
                 </div>
             {% endif %}
         {% endfor %}
-        <input type="email" name="email" class="form-control" placeholder="you@email.com" required="", autocomplete="off">
-        <input type="password" name="password" class="form-control" placeholder="password" required="", autocomplete="off">
+        {% render_field form.email class="form-control" placeholder="you@email.com" required="" autocomplete="off" type="email" %}
+        {% render_field form.password class="form-control" placeholder="password" required="" autocomplete="off" type="password" %}
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         <p class="h6 mt-2">Don't have an account? <a class="text-decoration-none" href="{% url 'signup' %}">Sign up</a>
         </p>
