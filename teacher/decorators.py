@@ -4,7 +4,7 @@ from django.http import HttpResponse
 def verify(view_func):
     def wrapper_func(request,*args, **kwargs):
         if(request.user.is_authenticated):
-            return redirect('dashboard')
+            return redirect('teacher:dashboard')
         else:
             return view_func(request, *args, **kwargs)
     return wrapper_func

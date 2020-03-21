@@ -20,7 +20,7 @@ def signupTeacher(request):
             teacher.set_password(password)
             teacher.save()
             messages.success(request, 'Account successfully created.')
-            return redirect('signin')
+            return redirect('teacher:signin')
         else:
             messages.error(request, 'Email or Username already taken.')
     
@@ -39,7 +39,7 @@ def signinTeacher(request):
         user = authenticate(request, username = email, password = password)
         if user is not None:
             login(request, user)
-            return redirect('dashboard')
+            return redirect('teacher:dashboard')
         else:
             messages.error(request, 'Incorrect email or password.')
         
@@ -51,9 +51,9 @@ def signinTeacher(request):
 
 def signoutTeacher(request):
     logout(request)
-    return redirect('signin')
+    return redirect('teacher:signin')
 
-@login_required(login_url='signin')
+@login_required(login_url='teacher:signin')
 def dashboard(request):
     assigned_course = Course.objects.filter(teacher = request.user).values()
     
@@ -64,7 +64,7 @@ def dashboard(request):
     return render(request, 'teacher/dashboard.html', context)
 
 
-@login_required(login_url='signin')
+@login_required(login_url='teacher:signin')
 def takeattendance(request, course):
     
     course = Course.objects.filter(code=course).values()
@@ -93,10 +93,10 @@ def takeattendance(request, course):
     }
     return render(request, 'teacher/takeattendance.html', context)
 
-@login_required(login_url='signin')
+@login_required(login_url='teacher:signin')
 def redtakeattendance(request):
-    return redirect('dashboard')
+    return redirect('teacher:dashboard')
 
-@login_required(login_url='signin')
+@login_required(login_url='teacher:signin')
 def history(request):
     return render(request, 'teacher/history.html', {'nav': 'history'})
