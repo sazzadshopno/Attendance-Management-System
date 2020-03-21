@@ -1,12 +1,23 @@
 {% extends 'teacher/base.html' %}
 {% block title %}
-<title>Dashboard</title>
+<title>Take Attendance</title>
 {% endblock%}
 {% block navbar %}
-    {% include 'teacher/navbar.html' %}
+{% include 'teacher/navbar.html' %}
 {% endblock %}
 {% block content %}
-    <div class="container text-center mt-5">
-        <h5>This is take attendance page</h5>
+<div class="container text-center mt-5">
+    <div class="card-body">
+        <h4>Taking attendance of {{ course_title }}</h4>
+        <form class="form-control-lg">
+            {{ formset.management_form }}
+            {% for form in forms %}
+                {{ form.student_name }}
+                {{ form.roll_no }}
+                {{ form.status }}
+                <br>
+            {% endfor %}
+        </form>
     </div>
+</div>
 {% endblock %}

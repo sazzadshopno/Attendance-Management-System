@@ -2,8 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.forms import formset_factory
 
-from .forms import TeacherSignUpForm, TeacherSignInForm
+from datetime import datetime
+
+from .models import *
+from .forms import TeacherSignUpForm, TeacherSignInForm, AttendanceForm
 from .decorators import verify
 
 @verify
@@ -51,11 +55,47 @@ def signoutTeacher(request):
 
 @login_required(login_url='signin')
 def dashboard(request):
-    return render(request, 'teacher/dashboard.html', {'nav': 'dashboard'})
+    assigned_course = Course.objects.filter(teacher = request.user).values()
+    
+    context = {
+        'courses': assigned_course,
+        'nav': 'dashboard'
+    }
+    return render(request, 'teacher/dashboard.html', context)
+
 
 @login_required(login_url='signin')
-def takeattendance(request):
-    return render(request, 'teacher/takeattendance.html', {'nav': 'takeattendance'})
+def takeattendance(request, course):
+    
+    course = Course.objects.filter(code=course).values()
+    course_title = course[0]['title']
+    semester = course[0]['semester_id']
+    students = Student.objects.filter(semester = semester).order_by('roll_no').values()
+    no_of_students = 0
+    students_attendance = []
+    for student in students:
+        info = {
+            'student_name': student['first_name'] + ' ' +  student['last_name'],
+            'course_id': course,
+            'date': datetime.now(),
+            'student_id': student['registration_no'],
+            'roll_no': student['roll_no']
+        }
+        students_attendance.append(info)
+        no_of_students += 1
+    
+    forms = formset_factory(AttendanceForm, max_num=no_of_students)
+    forms = forms(initial=students_attendance)
+    
+    context = {
+        'forms': forms,
+        'course_title': course_title, 
+    }
+    return render(request, 'teacher/takeattendance.html', context)
+
+@login_required(login_url='signin')
+def redtakeattendance(request):
+    return redirect('dashboard')
 
 @login_required(login_url='signin')
 def history(request):
