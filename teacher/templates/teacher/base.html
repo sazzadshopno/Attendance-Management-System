@@ -1,17 +1,20 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     {% include 'teacher/includes/css.html' %}
-    <link rel="stylesheet" href="{% static 'css/signin.css' %}">
     {% block title%}
     {% endblock %}
 </head>
+<body>
+{% block navbar%}
+{% endblock %}
 
 {% block content %}
 {% endblock %}
 
+{% block footer %}
+{% endblock %}
+</body>
 {% include 'teacher/includes/js.html' %}
 
 </html>

@@ -45,10 +45,18 @@ def signinTeacher(request):
     }
     return render(request, 'teacher/signin.html', context)
 
-def logoutTeacher(request):
+def signoutTeacher(request):
     logout(request)
     return redirect('signin')
 
 @login_required(login_url='signin')
 def dashboard(request):
-    return render(request, 'teacher/dashboard.html')
+    return render(request, 'teacher/dashboard.html', {'nav': 'dashboard'})
+
+@login_required(login_url='signin')
+def takeattendance(request):
+    return render(request, 'teacher/takeattendance.html', {'nav': 'takeattendance'})
+
+@login_required(login_url='signin')
+def history(request):
+    return render(request, 'teacher/history.html', {'nav': 'history'})
