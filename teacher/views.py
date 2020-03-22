@@ -65,31 +65,28 @@ def dashboard(request):
 
 
 @login_required(login_url='teacher:signin')
-def takeattendance(request, course):
-    
-    course = Course.objects.filter(code=course).values()
-    course_title = course[0]['title']
-    semester = course[0]['semester_id']
-    students = Student.objects.filter(semester = semester).order_by('roll_no').values()
+def takeattendance(request, code):
+    course = Course.objects.filter(code=code).values()
+    students = Student.objects.filter(semester = course[0]['semester_id']).order_by('roll_no').values()
     no_of_students = 0
-    students_attendance = []
+    attendance_info = []
     for student in students:
         info = {
             'student_name': student['first_name'] + ' ' +  student['last_name'],
             'course_id': course,
-            'date': datetime.now(),
             'student_id': student['registration_no'],
             'roll_no': student['roll_no']
         }
-        students_attendance.append(info)
+        attendance_info.append(info)
         no_of_students += 1
-    
+
     forms = formset_factory(AttendanceForm, max_num=no_of_students)
-    forms = forms(initial=students_attendance)
+    forms = forms(initial=attendance_info)
     
     context = {
         'forms': forms,
-        'course_title': course_title, 
+        'date': datetime.today().strftime('%Y-%m-%d'),
+        'course_title': course[0]['title'], 
     }
     return render(request, 'teacher/takeattendance.html', context)
 

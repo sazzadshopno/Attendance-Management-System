@@ -6,18 +6,44 @@
 {% include 'teacher/navbar.html' %}
 {% endblock %}
 {% block content %}
-<div class="container text-center mt-5">
-    <div class="card-body">
-        <h4>Taking attendance of {{ course_title }}</h4>
+<div class="container mt-5">
+    <h2>{{ course_title }}</h2>
+    <table class="table">
         <form class="form-control-lg">
+            {% csrf_token %}
             {{ formset.management_form }}
+            <tr style="margin-bottom: 10px;">
+                <input class="form-control-sm border-dark mb-1" type="date" name="date" id="date" value="{{date}}">
+            </tr>
+            <thead class="thead-dark">
+                <tr class="text-uppercase">
+                    <th style="width: 5%;">#</th>
+                    <th>Student Name</th>
+                    <th style="width: 20%">Roll No</th>
+                    <th style="width: 10%">Status</th>
+                </tr>
+            </thead>
+
             {% for form in forms %}
-                {{ form.student_name }}
-                {{ form.roll_no }}
-                {{ form.status }}
-                <br>
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ form.student_name.value }}</td>
+                <td>{{ form.roll_no.value }} </td>
+                <td style="padding-top:5px; padding-bottom:5px;">
+                    <input class="font-weight-bold" type="checkbox" data-toggle="toggle" data-size="mini" data-on="P"
+                        data-off="A" data-onstyle="success" data-offstyle="danger">
+                </td>
+            </tr>
             {% endfor %}
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="padding-top:5px; padding-bottom:5px;">
+                <button class="btn btn-outline-dark font-weight-bold btn-block" type="submit">Submit</button>
+            </td>
         </form>
-    </div>
+    </table>
+
+
 </div>
 {% endblock %}

@@ -6,7 +6,7 @@ urlpatterns = [
     path('signin/', views.signinTeacher, name="signin"),
     path('', views.dashboard, name="dashboard"),
 
-    path('takeattendance/<slug:course>', views.takeattendance, name="takeattendance"),
+    path('takeattendance/<slug:code>', views.takeattendance, name="takeattendance"),
     path('takeattendance/', views.redtakeattendance, name="redtakeattendance"),
 
     path('history/', views.history, name="history"),
