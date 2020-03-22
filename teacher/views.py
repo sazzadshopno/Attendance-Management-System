@@ -57,7 +57,12 @@ def signoutTeacher(request):
 @login_required(login_url='teacher:signin')
 def dashboard(request):
     assigned_course = Course.objects.filter(teacher = request.user).values()
-    
+    message = None
+    if 'error_message' in request.session:
+        message = request.session['error_message']
+        del request.session['error_message']
+        messages.error(request, message)
+
     context = {
         'courses': assigned_course,
         'nav': 'dashboard'
@@ -67,7 +72,12 @@ def dashboard(request):
 
 @login_required(login_url='teacher:signin')
 def takeattendance(request, code):
+    today = datetime.today().strftime('%Y-%m-%d')
     course = Course.objects.filter(code=code).values()
+    get_attendance = Attendance.objects.filter(date=today).filter(course_id=code).count()
+    if get_attendance > 0:
+        request.session['error_message'] = ('Attendance of %s for %s already taken.') % (course[0]['title'], today)
+        return redirect('teacher:dashboard')
     students = Student.objects.filter(semester = course[0]['semester_id']).order_by('roll_no').values()
     no_of_students = 0
     attendance_info = []
@@ -78,7 +88,7 @@ def takeattendance(request, code):
             'student_id': student['registration_no'],
             'roll_no': student['roll_no'],
             'status': False,
-            'date': datetime.today().strftime('%Y-%m-%d')
+            'date': today
         }
         attendance_info.append(info)
         no_of_students += 1
