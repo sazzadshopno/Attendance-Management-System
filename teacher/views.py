@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseNotFound
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -73,22 +74,48 @@ def takeattendance(request, code):
     for student in students:
         info = {
             'student_name': student['first_name'] + ' ' +  student['last_name'],
-            'course_id': course,
+            'course_id': course[0]['code'],
             'student_id': student['registration_no'],
-            'roll_no': student['roll_no']
+            'roll_no': student['roll_no'],
+            'status': False,
+            'date': datetime.today().strftime('%Y-%m-%d')
         }
         attendance_info.append(info)
         no_of_students += 1
 
-    forms = formset_factory(AttendanceForm, max_num=no_of_students)
-    forms = forms(initial=attendance_info)
+    formset = formset_factory(AttendanceForm, max_num=no_of_students)
+    if request.method == 'POST':
+        forms = formset(request.POST)
+        if forms.is_valid():
+            for form in forms:
+                if form.is_valid():
+                    course_id = Course.objects.get(code = form.cleaned_data['course_id'])
+                    student_id = Student.objects.get(registration_no = form.cleaned_data['student_id'])
+                    date = form.cleaned_data['date']
+                    status = form.cleaned_data['status']
+                    attendance_model = Attendance.objects.create(
+                        course = course_id,
+                        student = student_id,
+                        date = date,
+                        status = status
+                    )
+                    attendance_model.save()
+            return redirect('teacher:dashboard')
+        else:
+            return HttpResponseNotFound('Not working')
+
+    forms = formset(initial=attendance_info)
     
     context = {
         'forms': forms,
         'date': datetime.today().strftime('%Y-%m-%d'),
         'course_title': course[0]['title'], 
     }
+    
+    
+
     return render(request, 'teacher/takeattendance.html', context)
+
 
 @login_required(login_url='teacher:signin')
 def redtakeattendance(request):

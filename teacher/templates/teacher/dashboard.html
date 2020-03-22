@@ -13,11 +13,11 @@
         <table class="table">
             <thead class="thead-dark">
                 <tr class="text-uppercase">
-                    <th>#</th>
-                    <th>Course Title</th>
-                    <th>Semester</th>
-                    <th>Course Code</th>
-                    <th>Option</th>
+                    <th style="width: 5%;">#</th>
+                    <th style="width: 50%;">Course Title</th>
+                    <th style="width: 15%;">Semester</th>
+                    <th style="width: 15%;">Course Code</th>
+                    <th style="width: 15%;">Option</th>
                 </tr>
             </thead>
             {% for course in courses %}
@@ -26,7 +26,7 @@
                 <td>{{ course.title }}</td>
                 <td>{{ course.semester_id }} </td>
                 <td>{{ course.code }} </td>
-                <td> <a class="text-decoration-none btn btn-outline-dark btn-sm font-weight-bold card-link"
+                <td style="padding-top:5px; padding-bottom:5px;"> <a class="text-decoration-none btn btn-outline-dark btn-block btn-sm font-weight-bold card-link"
                         href="{% url 'teacher:takeattendance' course.code %}">Take Attendance</a> </td>
             </tr>
             {% endfor %}

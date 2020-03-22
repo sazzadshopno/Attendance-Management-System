@@ -9,12 +9,10 @@
 <div class="container mt-5">
     <h2>{{ course_title }}</h2>
     <table class="table">
-        <form class="form-control-lg">
+        {% load widget_tweaks %}
+        <form class="form-control-lg" method="POST">
             {% csrf_token %}
-            {{ formset.management_form }}
-            <tr style="margin-bottom: 10px;">
-                <input class="form-control-sm border-dark mb-1" type="date" name="date" id="date" value="{{date}}">
-            </tr>
+            {{ forms.management_form }}
             <thead class="thead-dark">
                 <tr class="text-uppercase">
                     <th style="width: 5%;">#</th>
@@ -26,12 +24,18 @@
 
             {% for form in forms %}
             <tr>
+                {% render_field form.student_name hidden="" %}
+                {% render_field form.course_id hidden="" %}
+                {% render_field form.student_id hidden="" %}
+                {% render_field form.roll_no hidden="" %}
+                {% render_field form.date hidden="" %}
+                
+                
                 <td>{{ forloop.counter }}</td>
                 <td>{{ form.student_name.value }}</td>
                 <td>{{ form.roll_no.value }} </td>
-                <td style="padding-top:5px; padding-bottom:5px;">
-                    <input class="font-weight-bold" type="checkbox" data-toggle="toggle" data-size="mini" data-on="P"
-                        data-off="A" data-onstyle="success" data-offstyle="danger">
+                <td>
+                    {% render_field form.status type="checkbox" class="switch"%}
                 </td>
             </tr>
             {% endfor %}
