@@ -41,6 +41,10 @@
             </tr>
             {% endfor %}
         </table>
+        {% else %}
+            <div class="card-body">
+                <h5>No course assigned to you. Contact a course co-ordinator to assign a course.</h4>
+            </div>
         {% endif %}
 </div>
 {% endblock %}
