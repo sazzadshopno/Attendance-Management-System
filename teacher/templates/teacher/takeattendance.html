@@ -8,11 +8,11 @@
 {% block content %}
 <div class="container mt-5">
     <h2>{{ course_title }}</h2>
-    <table class="table">
-        {% load widget_tweaks %}
-        <form class="form-control-lg" method="POST">
-            {% csrf_token %}
-            {{ forms.management_form }}
+    {% load widget_tweaks %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ forms.management_form }}
+        <table class="table">
             <thead class="thead-dark">
                 <tr class="text-uppercase">
                     <th style="width: 5%;">#</th>
@@ -29,8 +29,8 @@
                 {% render_field form.student_id hidden="" %}
                 {% render_field form.roll_no hidden="" %}
                 {% render_field form.date hidden="" %}
-                
-                
+
+
                 <td>{{ forloop.counter }}</td>
                 <td>{{ form.student_name.value }}</td>
                 <td>{{ form.roll_no.value }} </td>
@@ -39,14 +39,12 @@
                 </td>
             </tr>
             {% endfor %}
-            <td></td>
-            <td></td>
-            <td></td>
-            <td style="padding-top:5px; padding-bottom:5px;">
-                <button class="btn btn-outline-dark font-weight-bold btn-block" type="submit">Submit</button>
-            </td>
-        </form>
-    </table>
+        </table>
+        <div class="text-center">
+            <button class="btn btn-dark font-weight-bold btn-md" type="submit">Submit</button>
+        </div>
+    </form>
+
 
 
 </div>
