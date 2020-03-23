@@ -8,25 +8,27 @@
 {% block content %}
 <div class="container mt-5">
     <h2>Attendance Details of {{course}}</h2>
-    <div class="table-responsive" style="overflow-x:auto;">
+    <div class= "tscroll" style="overflow-x: scroll;">
         <table class="table table-bordered ">
             <thead class="thead-dark">
-                <th>Student Name</th>
-                <th>Roll</th>
-                {% for date in dates %}
-                <th> {{date.date}} </th>
-                {% endfor %}
+                <tr>
+                    <th >Roll Number</th>
+                    <th>Student Name</th>
+                    {% for date in dates %}
+                    <th> {{date.date}} </th>
+                    {% endfor %}
+                </tr>
             </thead>
             {% for info in student_info %}
             <tr>
-                <td>{{ info.name }}</td>
-                <td>{{ info.roll_no }}</td>
+                <th>{{ info.roll_no }}</th>
+                <th>{{ info.name }}</th>
                 {% for attendance in info.attendances %}
-                {% if attendance == 'A' %}
+                    {% if attendance == 'A' %}
                     <td style="color: #FF4500;; font-weight: bold;"> {{attendance}} </td>
-                {% else %}
-                <td style="color: #4bb543; font-weight: bold;"> {{attendance}}</td>
-                {% endif %}
+                    {% else %}
+                    <td style="color: #4bb543; font-weight: bold;"> {{attendance}}</td>
+                    {% endif %}
                 {% endfor %}
             </tr>
             {% endfor %}
