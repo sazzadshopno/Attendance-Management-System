@@ -1,0 +1,36 @@
+{% extends 'teacher/base.html' %}
+{% block title %}
+<title>Take Attendance</title>
+{% endblock%}
+{% block navbar %}
+{% include 'teacher/navbar.html' %}
+{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h4>Report generated</h4>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr class="text-uppercase">
+                    <th style="width: 20%;">Total student</th>
+                    <th style="width: 20%;">Present</th>
+                    <th style="width: 20%;">Absent</th>
+                    <th style="width: 20%;">Present %</th>
+                    <th style="width: 20%;">Absent %</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>{{total_student}}</td>
+                <td>{{total_present}}</td>
+                <td>{{total_absent}}</td>
+                <td>{{present_percentage}}%</td>
+                <td>{{absent_percentage}}%</td>
+            </tr>
+        </table>
+        <div class="text-center">
+            <a class="text-decoration-none btn btn-dark btn-md font-weight-bold card-link"
+                        href="{% url 'teacher:dashboard' %}">Go to Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

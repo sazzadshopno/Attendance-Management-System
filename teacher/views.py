@@ -97,12 +97,20 @@ def takeattendance(request, code):
     if request.method == 'POST':
         forms = formset(request.POST)
         if forms.is_valid():
+            total_student = 0
+            total_present = 0
+            total_absent = 0
             for form in forms:
                 if form.is_valid():
                     course_id = Course.objects.get(code = form.cleaned_data['course_id'])
                     student_id = Student.objects.get(registration_no = form.cleaned_data['student_id'])
                     date = form.cleaned_data['date']
                     status = form.cleaned_data['status']
+                    total_student += 1
+                    if status:
+                        total_present += 1
+                    else:
+                        total_absent += 1
                     attendance_model = Attendance.objects.create(
                         course = course_id,
                         student = student_id,
@@ -110,9 +118,18 @@ def takeattendance(request, code):
                         status = status
                     )
                     attendance_model.save()
-            return redirect('teacher:dashboard')
+            absent_percentage = ((total_student-total_present)/total_student) * 100
+            present_percentage = 100 - absent_percentage
+            context = {
+                'total_student': total_student,
+                'total_present': total_present,
+                'total_absent': total_absent,
+                'absent_percentage': absent_percentage,
+                'present_percentage': present_percentage
+            }
+            return render(request, 'teacher/report.html', context)
         else:
-            return HttpResponseNotFound('Not working')
+            return HttpResponseNotFound('Error while submiting the attendance. Please try again later.')
 
     forms = formset(initial=attendance_info)
     

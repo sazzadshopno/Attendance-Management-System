@@ -8,6 +8,7 @@ urlpatterns = [
 
     path('takeattendance/<slug:code>', views.takeattendance, name="takeattendance"),
     path('takeattendance/', views.redtakeattendance, name="redtakeattendance"),
+
     path('history/', views.history, name="history"),
     path('signout/', views.signoutTeacher, name="signout")
 ]
