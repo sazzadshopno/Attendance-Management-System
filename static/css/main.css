@@ -42,3 +42,4 @@ input[type="checkbox"].switch{
   input[type="checkbox"].switch:checked:after{
     left: calc(100% - 1.5em);
   }
+

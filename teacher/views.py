@@ -138,8 +138,6 @@ def takeattendance(request, code):
         'date': datetime.today().strftime('%Y-%m-%d'),
         'course_title': course[0]['title'], 
     }
-    
-    
 
     return render(request, 'teacher/takeattendance.html', context)
 
@@ -150,4 +148,34 @@ def redtakeattendance(request):
 
 @login_required(login_url='teacher:signin')
 def history(request):
-    return render(request, 'teacher/history.html', {'nav': 'history'})
+    courses = Course.objects.filter(teacher = request.user).values()
+    return render(request, 'teacher/history.html', {'nav': 'history', 'courses': courses})
+    
+@login_required(login_url='teacher:signin')
+def viewhistory(request, code):
+    # Dates of attendances taken
+    dates = Attendance.objects.filter(course_id=code).order_by('date').values('date').distinct()
+    # Get the details of the course using code
+    course = Course.objects.filter(code=code).values()
+    # Get the student list who enrolled this course
+    students = Student.objects.filter(semester = course[0]['semester_id']).order_by('roll_no').values()
+    student_info = []
+    for student in students:
+        std = {
+            'name': student['first_name'] + ' ' +  student['last_name'],
+            'roll_no': student['roll_no']
+        }
+        attendances = []
+        for date in dates:
+            atndance = Attendance.objects.filter(course_id = code).filter(date = date['date']).filter(student_id=student['registration_no']).values()
+            attendances.append('P' if atndance[0]['status'] == True else 'A')
+        std.update(
+            {'attendances': attendances}
+        )
+        student_info.append(std)
+    context = {
+        'student_info': student_info,
+        'dates': dates,
+        'course': course[0]['title']
+    }
+    return render(request, 'teacher/details.html', context)

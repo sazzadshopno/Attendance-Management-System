@@ -10,5 +10,6 @@ urlpatterns = [
     path('takeattendance/', views.redtakeattendance, name="redtakeattendance"),
 
     path('history/', views.history, name="history"),
+    path('history/<slug:code>', views.viewhistory, name="viewhistory"),
     path('signout/', views.signoutTeacher, name="signout")
 ]
