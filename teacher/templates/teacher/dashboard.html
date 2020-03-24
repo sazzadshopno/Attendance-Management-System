@@ -8,43 +8,44 @@
 {% block content %}
 <div class="container mt-5">
     {% for message in messages %}
-        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            {% endif %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
     {% endfor %}
     <h2> Assigned Courses </h2>
-    
-        {% if courses|length > 1 %}
-        <table class="table">
-            <thead class="thead-dark">
-                <tr class="text-uppercase">
-                    <th style="width: 5%;">#</th>
-                    <th style="width: 50%;">Course Title</th>
-                    <th style="width: 15%;">Semester</th>
-                    <th style="width: 15%;">Course Code</th>
-                    <th style="width: 15%;">Option</th>
-                </tr>
-            </thead>
-            {% for course in courses %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ course.title }}</td>
-                <td>{{ course.semester_id }} </td>
-                <td>{{ course.code }} </td>
-                <td style="padding-top:5px; padding-bottom:5px;"> <a class="text-decoration-none btn btn-outline-dark btn-block btn-sm font-weight-bold card-link"
-                        href="{% url 'teacher:takeattendance' course.code %}">Take Attendance</a> </td>
+
+    {% if courses|length > 1 %}
+    <table class="table">
+        <thead class="thead-dark">
+            <tr class="text-uppercase">
+                <th>#</th>
+                <th>Course Title</th>
+                <th>Semester</th>
+                <th>Course Code</th>
+                <th>Option</th>
             </tr>
-            {% endfor %}
-        </table>
-        {% else %}
-            <div class="card-body">
-                <h5>No course assigned to you. Contact a course co-ordinator to assign a course.</h4>
-            </div>
-        {% endif %}
+        </thead>
+        {% for course in courses %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ course.title }}</td>
+            <td>{{ course.semester_id }} </td>
+            <td>{{ course.code }} </td>
+            <td style="padding-top:5px; padding-bottom:5px;"> <a
+                    class="text-decoration-none btn btn-outline-dark btn-block btn-sm font-weight-bold card-link"
+                    href="{% url 'teacher:takeattendance' course.code %}">Take Attendance</a> </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <div class="card-body">
+        <h5>No course assigned to you. Contact a course co-ordinator to assign a course.</h4>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

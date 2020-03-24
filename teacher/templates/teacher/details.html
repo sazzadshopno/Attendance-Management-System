@@ -8,11 +8,11 @@
 {% block content %}
 <div class="container mt-5">
     <h2>Attendance Details of {{course}}</h2>
-    <div class= "tscroll" style="overflow-x: scroll;">
+    <div style="overflow-x: scroll;">
         <table class="table table-bordered ">
             <thead class="thead-dark">
                 <tr>
-                    <th >Roll Number</th>
+                    <th>Roll Number</th>
                     <th>Student Name</th>
                     {% for date in dates %}
                     <th> {{date.date}} </th>
@@ -21,7 +21,7 @@
             </thead>
             {% for info in student_info %}
             <tr>
-                <th>{{ info.roll_no }}</th>
+                <th >{{ info.roll_no }}</th>
                 <th>{{ info.name }}</th>
                 {% for attendance in info.attendances %}
                     {% if attendance == 'A' %}
@@ -35,4 +35,22 @@
         </table>
     </div>
 </div>
+<style>
+    th {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+    }
+    th:first-child {
+        left: -1px;
+        z-index: 1;
+        background-color: red;
+    }
+    td,
+    th {
+        white-space: nowrap;
+        text-align: center;
+    }
+</style>
 {% endblock %}
+
