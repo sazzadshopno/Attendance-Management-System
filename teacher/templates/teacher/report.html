@@ -9,14 +9,14 @@
 <div class="container mt-5">
     <h4>Report Generated</h4>
 
-    <table class="table table-striped">
-        <thead class="thead-dark">
-            <tr class="text-uppercase">
-                <th style="width: 20%;">Total student</th>
-                <th style="width: 20%;">Present</th>
-                <th style="width: 20%;">Absent</th>
-                <th style="width: 20%;">Present %</th>
-                <th style="width: 20%;">Absent %</th>
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>Total student</th>
+                <th>Present</th>
+                <th>Absent</th>
+                <th>Present %</th>
+                <th>Absent %</th>
             </tr>
         </thead>
         <tr>
@@ -28,8 +28,8 @@
         </tr>
     </table>
     <div class="text-center">
-        <a class="text-decoration-none btn btn-dark btn-md font-weight-bold card-link"
-            href="{% url 'teacher:dashboard' %}">Go to Dashboard</a>
+        <a class="text-decoration-none btn btn-success btn-md font-weight-bold" href="{% url 'teacher:dashboard' %}">Go
+            to Dashboard</a>
     </div>
 </div>
 {% endblock %}
