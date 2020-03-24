@@ -10,12 +10,12 @@
     <h2>Attendance Sheet</h2>
     <div id="accordion">
         {% for course in courses %}
-        <div class="card mb-4">
+        <div class="card card-deck mb-4">
             <div class="card-header" id="heading{{ course.code }}">
                 <h5 class="mb-0">
-                    <button class="btn btn-dark" data-toggle="collapse" data-target="#collapse{{ course.code }}"
+                    <button class="btn btn-light" data-toggle="collapse" data-target="#collapse{{ course.code }}"
                         aria-expanded="true" aria-controls="collapse{{ course.code }}">
-                       {{forloop.counter}}. {{ course.title }}
+                       {{ course.title }}
                     </button>
                 </h5>
             </div>
@@ -24,7 +24,6 @@
                 <div class="card-body">
                     <a class="text-decoration-none btn btn-primary btn-sm font-weight-bold"
                         href="{% url 'teacher:viewhistory' course.code %}" >View All</a>
-                    <p class="mt-2">Specific date feature coming soon.</p>
                 </div>
             </div>
         </div>

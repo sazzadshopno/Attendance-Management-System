@@ -154,7 +154,7 @@ def history(request):
 @login_required(login_url='teacher:signin')
 def viewhistory(request, code):
     # Dates of attendances taken
-    dates = Attendance.objects.filter(course_id=code).order_by('date').values('date').distinct()
+    dates = Attendance.objects.filter(course_id=code).order_by('-date').values('date').distinct()
     # Get the details of the course using code
     course = Course.objects.filter(code=code).values()
     # Get the student list who enrolled this course

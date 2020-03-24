@@ -6,7 +6,7 @@
 {% include 'teacher/navbar.html' %}
 {% endblock %}
 {% block content %}
-<div class="container mt-5">
+<div class="container mt-5" >
     {% for message in messages %}
     {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -19,10 +19,11 @@
     {% endfor %}
     <h2> Assigned Courses </h2>
 
-    {% if courses|length > 1 %}
-    <table class="table">
-        <thead class="thead-dark">
-            <tr class="text-uppercase">
+    {% if courses|length > 0 %}
+    <div style="overflow-x: scroll;">
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
                 <th>#</th>
                 <th>Course Title</th>
                 <th>Semester</th>
@@ -32,16 +33,17 @@
         </thead>
         {% for course in courses %}
         <tr>
-            <td>{{ forloop.counter }}</td>
+            <th>{{ forloop.counter }}</th>
             <td>{{ course.title }}</td>
             <td>{{ course.semester_id }} </td>
             <td>{{ course.code }} </td>
             <td style="padding-top:5px; padding-bottom:5px;"> <a
-                    class="text-decoration-none btn btn-outline-dark btn-block btn-sm font-weight-bold card-link"
+                    class="text-decoration-none btn btn-light btn-block btn-md font-weight-bold"
                     href="{% url 'teacher:takeattendance' course.code %}">Take Attendance</a> </td>
         </tr>
         {% endfor %}
     </table>
+    </div>
     {% else %}
     <div class="card-body">
         <h5>No course assigned to you. Contact a course co-ordinator to assign a course.</h4>
