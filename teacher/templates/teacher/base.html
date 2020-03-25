@@ -14,11 +14,13 @@
     {% block content %}
     {% endblock %}
 
-    <footer class="page-footer font-small">
-        <div class="footer-copyright text-center py-3">Crafted with ♥ by
-            <a class="text-decoration-none text-danger font-weight-bold" href="https://github.com/sazzadshopno" target="_blank"> Sazzad Shopno</a>
-        </div>
-    </footer>
+    {% block footer %}
+        <footer class="page-footer font-small">
+            <div class="footer-copyright text-center py-3">Crafted with ♥ by
+                <a class="text-decoration-none text-danger font-weight-bold" href="https://github.com/sazzadshopno" target="_blank"> Sazzad Shopno</a>
+            </div>
+        </footer>
+    {% endblock %}
 </body>
 {% include 'teacher/includes/js.html' %}
 
