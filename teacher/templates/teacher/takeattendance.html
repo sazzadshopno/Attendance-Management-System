@@ -1,0 +1,51 @@
+{% extends 'teacher/base.html' %}
+{% block title %}
+<title>Take Attendance</title>
+{% endblock%}
+{% block navbar %}
+{% include 'teacher/navbar.html' %}
+{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2>{{ course_title }}</h2>
+    {% load widget_tweaks %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ forms.management_form }}
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr class="text-uppercase">
+                    <th>#</th>
+                    <th>Student Name</th>
+                    <th>Roll No</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            {% for form in forms %}
+            <tr>
+                {% render_field form.student_name hidden="" %}
+                {% render_field form.course_id hidden="" %}
+                {% render_field form.student_id hidden="" %}
+                {% render_field form.roll_no hidden="" %}
+                {% render_field form.date hidden="" %}
+
+
+                <td>{{ forloop.counter }}</td>
+                <td>{{ form.student_name.value }}</td>
+                <td>{{ form.roll_no.value }} </td>
+                <td>
+                    {% render_field form.status type="checkbox" class="switch" %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="text-center">
+            <button class="btn btn-success font-weight-bold btn-md" type="submit">Submit</button>
+        </div>
+    </form>
+
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'teacher/base.html' %}
+{% block title %}
+<title>Dashboard</title>
+{% endblock%}
+{% block navbar %}
+{% include 'teacher/navbar.html' %}
+{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Attendance Sheet</h2>
+    <div id="accordion">
+        {% for course in courses %}
+        <div class="card card-deck mb-4">
+            <div class="card-header" id="heading{{ course.code }}">
+                <h5 class="mb-0">
+                    <button class="btn btn-light" data-toggle="collapse" data-target="#collapse{{ course.code }}"
+                        aria-expanded="true" aria-controls="collapse{{ course.code }}">
+                       {{ course.title }}
+                    </button>
+                </h5>
+            </div>
+            <div id="collapse{{ course.code }}" class="collapse" aria-labelledby="heading{{ course.code }}"
+                data-parent="#accordion">
+                <div class="card-body">
+                    <a class="text-decoration-none btn btn-primary btn-sm font-weight-bold"
+                        href="{% url 'teacher:viewhistory' course.code %}" >View All</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

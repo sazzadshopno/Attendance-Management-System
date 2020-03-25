@@ -1,0 +1,53 @@
+{% extends 'teacher/base.html' %}
+{% block title %}
+<title>Dashboard</title>
+{% endblock%}
+{% block navbar %}
+{% include 'teacher/navbar.html' %}
+{% endblock %}
+{% block content %}
+<div class="container mt-5" >
+    {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+    {% endfor %}
+    <h2> Assigned Courses </h2>
+
+    {% if courses|length > 0 %}
+    <div style="overflow-x: scroll;">
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>#</th>
+                <th>Course Title</th>
+                <th>Semester</th>
+                <th>Course Code</th>
+                <th>Option</th>
+            </tr>
+        </thead>
+        {% for course in courses %}
+        <tr>
+            <th>{{ forloop.counter }}</th>
+            <td>{{ course.title }}</td>
+            <td>{{ course.semester_id }} </td>
+            <td>{{ course.code }} </td>
+            <td style="padding-top:5px; padding-bottom:5px;"> <a
+                    class="text-decoration-none btn btn-light btn-block btn-md font-weight-bold"
+                    href="{% url 'teacher:takeattendance' course.code %}">Take Attendance</a> </td>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+    {% else %}
+    <div class="card-body">
+        <h5>No course assigned to you. Contact a course co-ordinator to assign a course.</h4>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'teacher/base.html' %}
+{% block title %}
+<title>Dashboard</title>
+{% endblock%}
+{% block navbar %}
+{% include 'teacher/navbar.html' %}
+{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Attendance Details of {{course}}</h2>
+    <div style="overflow-x: scroll;">
+        <table class="table table-bordered ">
+            <thead class="thead-light">
+                <tr>
+                    <th class="frozen">Roll Number</th>
+                    <th>Student Name</th>
+                    {% for date in dates %}
+                    <th> {{date.date}} </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            {% for info in student_info %}
+            <tr>
+                <th class="frozen">{{ info.roll_no }}</th>
+                <td>{{ info.name }}</td>
+                {% for attendance in info.attendances %}
+                    {% if attendance == 'A' %}
+                    <td style="color: #FF4500;; font-weight: bold;"> {{attendance}} </td>
+                    {% else %}
+                    <td style="color: #4bb543; font-weight: bold;"> {{attendance}}</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
+
