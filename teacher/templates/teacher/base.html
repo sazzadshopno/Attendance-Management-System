@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {% include 'teacher/includes/css.html' %}
     {% block title%}
     {% endblock %}
 </head>
+
 <body>
-{% block navbar%}
-{% endblock %}
+    {% block navbar%}
+    {% endblock %}
 
-{% block content %}
-{% endblock %}
+    {% block content %}
+    {% endblock %}
 
-{% block footer %}
-{% endblock %}
+    <footer class="page-footer font-small">
+        <div class="footer-copyright text-center py-3">Crafted with ♥ by
+            <a class="text-decoration-none text-danger font-weight-bold" href="https://github.com/sazzadshopno" target="_blank"> Sazzad Shopno</a>
+        </div>
+    </footer>
 </body>
 {% include 'teacher/includes/js.html' %}
 
