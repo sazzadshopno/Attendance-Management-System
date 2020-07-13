@@ -1,0 +1,13 @@
+How to get started with AMS?
+
+Here are the few steps you should follow:
+1. Install Python-3.6.2-amd64.exe
+2. Run this command 'pip install pipenv'
+3. Run this command 'pip install shell'
+4. Run this command 'pipenv install'
+5. Create a db in XAMPP called 'ams'
+6. Run this command 'python manage.py migrate'
+7. Run this command 'winpty python manage.py createsuperuser'
+After creating a superuser
+8. Go to 'http://127.0.0.1:8000/admin/' to courses and students.
+9. Teacher must signup and wait for superuser to make their account active.
