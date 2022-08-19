@@ -40,7 +40,7 @@ class Teacher(AbstractBaseUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
-    
+
     objects = TeacherManager()
 
     class Meta:
@@ -49,9 +49,12 @@ class Teacher(AbstractBaseUser):
 
     def has_perm(self, perm, obj= None):
         return self.is_active
-    
+
     def has_module_perms(self, app_label):
         return True
+
+    def get_all_permissions(obj=None):
+        return []
 
     def __str__(self):
         return  self.username
@@ -63,10 +66,10 @@ class Batch(models.Model):
 
     class Meta:
         ordering = ['semester_id']
-    
+
     def __str__(self):
         return "%s %s" % (self.department, self.semester)
-    
+
 class Course(models.Model):
     code = models.CharField(max_length = 10, primary_key = True)
     title = models.CharField(max_length = 50)

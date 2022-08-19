@@ -9,8 +9,8 @@ yapf = "*"
 
 [packages]
 django = "*"
-mysqlclient = "*"
 django-widget-tweaks = "*"
+django-jazzmin = "*"
 
 [requires]
 python_version = "3.6"
