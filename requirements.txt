@@ -4,3 +4,4 @@ django-jazzmin==2.5.0
 django-widget-tweaks==1.4.12
 sqlparse==0.4.2
 whitenoise==6.2.0
+gunicorn
