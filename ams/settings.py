@@ -150,3 +150,5 @@ MEDIA_URL = '/images/'
 STATIC_PATH = os.path.join(BASE_DIR, 'static')
 STATIC_ROOT = 'staticfiles'
 STATICFILES_DIRS = None
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
