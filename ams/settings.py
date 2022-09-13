@@ -25,7 +25,7 @@ SECRET_KEY = 'fe9ct&i1v&%@@)#a=ekb_%w*jup_*=p_zp$4+2_z=y-ko!6&sd'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ahr-ams.herokuapp.com']
+ALLOWED_HOSTS = ['ahr-ams.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -143,7 +143,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'static'),
-# ]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
