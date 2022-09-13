@@ -33,6 +33,8 @@ ALLOWED_HOSTS = ['ahr-ams.herokuapp.com', '127.0.0.1']
 INSTALLED_APPS = [
     'jazzmin',
     'teacher',
+    "whitenoise.runserver_nostatic",
+    "django.contrib.staticfiles",
     'widget_tweaks',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -52,6 +54,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'ams.urls'
@@ -143,7 +147,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+STATIC_PATH = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = 'staticfiles'
+STATICFILES_DIRS = None
