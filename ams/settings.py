@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
 ]
 
 AUTH_USER_MODEL = 'teacher.Teacher'
@@ -147,8 +146,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
-STATIC_PATH = os.path.join(BASE_DIR, 'static')
-STATIC_ROOT = 'staticfiles'
-STATICFILES_DIRS = None
-
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]

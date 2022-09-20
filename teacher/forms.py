@@ -1,3 +1,4 @@
+from datetime import date, timedelta
 from django.forms import ModelForm, formset_factory
 from django import forms
 from .models import Teacher, Attendance
@@ -29,3 +30,12 @@ class AttendanceForm(forms.Form):
     roll_no = forms.CharField(max_length=10, required=False)
     status = forms.BooleanField(required=False)
     date = forms.CharField(required=False)
+
+
+class AttendanceDateForm(forms.Form):
+    date_choices = [(str(date.today() - timedelta(i)), (str(date.today() - timedelta(i)))) for i in range(7)]
+
+    attendance_date = forms.ChoiceField(choices=tuple(date_choices))
+
+    class Meta:
+        fields = ["attendance_date"]

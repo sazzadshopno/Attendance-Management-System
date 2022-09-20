@@ -1,3 +1,4 @@
+from pyexpat import model
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.hashers import make_password
@@ -99,9 +100,10 @@ class Attendance(models.Model):
     student = models.ForeignKey(Student, on_delete= models.CASCADE)
     date = models.DateField()
     status = models.BooleanField()
+    createdAt = models.DateTimeField(auto_created=True, auto_now=True)
 
     class Meta:
         ordering = ['date']
 
     def __str__(self):
-        return self.student
+        return f'{self.date} - {self.course} - {self.student}'

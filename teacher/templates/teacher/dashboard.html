@@ -39,7 +39,7 @@
             <td>{{ course.code }} </td>
             <td style="padding-top:5px; padding-bottom:5px;"> <a
                     class="text-decoration-none btn btn-light btn-block btn-md font-weight-bold"
-                    href="{% url 'teacher:takeattendance' course.code %}">Take Attendance</a> </td>
+                    href="{% url 'teacher:takeattendance' course.code %}?attendance_date={{attendance_date}}">Take Attendance</a> </td>
         </tr>
         {% endfor %}
     </table>

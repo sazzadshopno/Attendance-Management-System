@@ -8,7 +8,7 @@ from django.forms import formset_factory
 from datetime import datetime
 
 from .models import *
-from .forms import TeacherSignUpForm, TeacherSignInForm, AttendanceForm
+from .forms import AttendanceDateForm, TeacherSignUpForm, TeacherSignInForm, AttendanceForm
 from .decorators import verify
 
 @verify
@@ -56,6 +56,7 @@ def signoutTeacher(request):
 
 @login_required(login_url='teacher:signin')
 def dashboard(request):
+    today = datetime.today().strftime('%Y-%m-%d')
     assigned_course = Course.objects.filter(teacher = request.user).values()
     message = None
     if 'error_message' in request.session:
@@ -65,29 +66,31 @@ def dashboard(request):
 
     context = {
         'courses': assigned_course,
-        'nav': 'dashboard'
+        'nav': 'dashboard',
+        'attendance_date': today
     }
     return render(request, 'teacher/dashboard.html', context)
 
 
 @login_required(login_url='teacher:signin')
 def takeattendance(request, code):
-    today = datetime.today().strftime('%Y-%m-%d')
+    today = request.GET.get('attendance_date', datetime.today().strftime('%Y-%m-%d'))
+    # # today = datetime.today().strftime('%Y-%m-%d')
+    # print(request.GET)
     course = Course.objects.filter(code=code).values()
-    get_attendance = Attendance.objects.filter(date=today).filter(course_id=code).count()
-    if get_attendance > 0:
-        request.session['error_message'] = ('Attendance of %s for %s already taken.') % (course[0]['title'], today)
-        return redirect('teacher:dashboard')
+    
     students = Student.objects.filter(semester = course[0]['semester_id']).order_by('roll_no').values()
     no_of_students = 0
     attendance_info = []
+
     for student in students:
+        current_student_status = Attendance.objects.filter(date=today, course_id=code, student_id=student['registration_no']).order_by('-createdAt').first()
         info = {
             'student_name': student['first_name'] + ' ' +  student['last_name'],
             'course_id': course[0]['code'],
             'student_id': student['registration_no'],
             'roll_no': student['roll_no'],
-            'status': False,
+            'status': current_student_status.status if current_student_status else False,
             'date': today
         }
         attendance_info.append(info)
@@ -107,17 +110,29 @@ def takeattendance(request, code):
                     date = form.cleaned_data['date']
                     status = form.cleaned_data['status']
                     total_student += 1
+                    
                     if status:
                         total_present += 1
                     else:
                         total_absent += 1
-                    attendance_model = Attendance.objects.create(
-                        course = course_id,
-                        student = student_id,
-                        date = date,
-                        status = status
-                    )
-                    attendance_model.save()
+
+                    current_student_status = Attendance.objects.filter(date=today, course_id=code, student_id=student_id).order_by('-createdAt').first()
+                    
+                    if current_student_status:
+                        attendance_model = Attendance.objects.filter(date=today, course_id=code, student_id=student_id).update(
+                            course = course_id,
+                            student = student_id,
+                            date = date,
+                            status = status
+                        )
+                    else: 
+                        attendance_model = Attendance.objects.create(
+                            course = course_id,
+                            student = student_id,
+                            date = date,
+                            status = status
+                        )
+                        attendance_model.save()
             absent_percentage = ((total_student-total_present)/total_student) * 100
             present_percentage = 100 - absent_percentage
             context = {
@@ -135,6 +150,7 @@ def takeattendance(request, code):
     
     context = {
         'forms': forms,
+        'date_form': AttendanceDateForm(),
         'date': datetime.today().strftime('%Y-%m-%d'),
         'course_title': course[0]['title'], 
     }
